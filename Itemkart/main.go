@@ -63,6 +63,15 @@ func main() {
 	r.POST("/customer", contactHandler.CreateCustomer())
 	r.POST("/customer/:id", contactHandler.UpdateCustomer())
 	r.DELETE("/customer/:id", contactHandler.DeleteCustomer())
+
+	cdbp := &database.ContactDBP{Client: db}
+	ProductHandler := &h.ProductHandler{IProduct: cdbp}
+
+	r.GET("/product/:id", ProductHandler.GetProductByID())
+	r.POST("/product", ProductHandler.CreateProduct())
+	r.POST("/product/:id", ProductHandler.UpdateProduct())
+	r.DELETE("/product/:id", ProductHandler.DeleteProduct())
+
 	r.Run(PORT)
 	fmt.Println("This is a ItemKart service.....")
 }
