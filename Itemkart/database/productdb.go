@@ -1,32 +1,14 @@
 package database
 
 import (
-	"errors"
 	"itemkart/models"
 
 	"gorm.io/gorm"
 )
 
-var (
-	ERROR_CONTACT_EXISTS1 = errors.New("Contact already exists with the given email address")
-)
-
 type ContactDBP struct {
 	Client interface{}
 }
-
-// func (c *ContactDB) IfExists(email string) error {
-// 	filter := map[string]interface{}{}
-// 	filter["email"] = email
-// 	result := c.Client.(*gorm.DB).Model(&models.Customer{}).First(&filter)
-// 	if result.Error != nil {
-// 		return result.Error
-// 	}
-// 	if result.RowsAffected > 0 {
-// 		return ERROR_CONTACT_EXISTS
-// 	}
-// 	return nil
-// }
 
 func (c *ContactDBP) Get(id string) (*models.Product, error) {
 	contact := &models.Product{}

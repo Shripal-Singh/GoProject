@@ -6,11 +6,8 @@ import (
 	"itemkart/interfaces"
 	"itemkart/models"
 
-	//"fmt"
 	"io/ioutil"
 	"net/http"
-
-	//"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang/glog"
@@ -145,7 +142,7 @@ func (ch *CustmerHandler) CreateCustomer() func(*gin.Context) {
 		}
 		c.JSON(http.StatusCreated, gin.H{
 			"status":  "success",
-			"message": id,
+			"message": "Customer successfully created",
 		})
 		glog.Info("Customer successfully created:", id)
 		c.Abort()
@@ -205,7 +202,7 @@ func (ch *CustmerHandler) DeleteCustomer() func(*gin.Context) {
 		}
 		c.JSON(http.StatusOK, gin.H{
 			"status":  "success",
-			"message": fmt.Sprint(result, " record deleted"),
+			"message": fmt.Sprint(result, " customer record deleted"),
 		})
 		glog.Info("Contact successfully deleted:", result)
 		c.Abort()
@@ -302,9 +299,9 @@ func (ch *CustmerHandler) UpdateCustomer() func(*gin.Context) {
 		}
 		c.JSON(http.StatusCreated, gin.H{
 			"status":  "success",
-			"message": ids,
+			"message": "Customer record successfully updated",
 		})
-		glog.Info("Customer successfully created:", ids)
+		glog.Info("Customer record successfully updated:", ids)
 		c.Abort()
 	}
 }

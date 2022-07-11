@@ -11,17 +11,10 @@ import (
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/golang/glog"
-)
-
-var (
-	DBCONNECTION string = "root:Mysql@123@tcp(127.0.0.1:3306)/demo?charset=utf8mb4&parseTime=True&loc=Local"
-
-	//"host=localhost user=root password=Mysql@123 dbname=demo port=3306 sslmode=disable TimeZone=Asia/Shanghai"
-	PORT string = ":50080"
+	"github.com/joho/godotenv"
 )
 
 func usage() {
-	//fmt.Fprintf(os.Stderr, "usage: example -stderrthreshold=[INFO|WARNING|FATAL] -log_dir=[string]\n")
 	flag.PrintDefaults()
 	os.Exit(2)
 }
@@ -33,6 +26,14 @@ func init() {
 	flag.Parse()
 }
 func main() {
+	err := godotenv.Load("localconfig.env")
+	if err != nil {
+		glog.Fatal("DSome error occured to load config file :", err)
+	}
+
+	DBCONNECTION := os.Getenv("DBCONNECTION")
+	PORT := os.Getenv("PORT")
+
 	if os.Getenv("PORT") != "" {
 		PORT = os.Getenv("PORT")
 	}
@@ -41,29 +42,31 @@ func main() {
 	}
 
 	db, err := database.GetConnection(DBCONNECTION)
-	//db, err := sql.Open("mysql", "root:Mysql@123@tcp(127.0.0.1:3306)/demo")
-	//db.SetMaxOpenConns(10)
-	//db.SetMaxIdleConns(5)
 	if err != nil {
 		glog.Fatal("Database Error:", err)
 	}
 
-	cdb := &database.ContactDB{Client: db}
+	//Data store in File
 	//cdb := &filedb.FileDB{}
-	contactHandler := &h.CustmerHandler{ICustomer: cdb}
 
+	//Test API
 	r := gin.Default()
-
 	r.GET("/ping", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"message": "pong",
 		})
 	})
+
+	//Customer API
+	cdb := &database.ContactDB{Client: db}
+	contactHandler := &h.CustmerHandler{ICustomer: cdb}
+
 	r.GET("/customer/:id", contactHandler.GetCustomerByID())
 	r.POST("/customer", contactHandler.CreateCustomer())
 	r.POST("/customer/:id", contactHandler.UpdateCustomer())
 	r.DELETE("/customer/:id", contactHandler.DeleteCustomer())
 
+	//Product API
 	cdbp := &database.ContactDBP{Client: db}
 	ProductHandler := &h.ProductHandler{IProduct: cdbp}
 

@@ -6,11 +6,8 @@ import (
 	"itemkart/interfaces"
 	"itemkart/models"
 
-	//"fmt"
 	"io/ioutil"
 	"net/http"
-
-	//"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang/glog"
@@ -145,7 +142,7 @@ func (ch *ProductHandler) CreateProduct() func(*gin.Context) {
 		}
 		c.JSON(http.StatusCreated, gin.H{
 			"status":  "success",
-			"message": id,
+			"message": "Product successfully created",
 		})
 		glog.Info("Product successfully created:", id)
 		c.Abort()
@@ -205,9 +202,9 @@ func (ch *ProductHandler) DeleteProduct() func(*gin.Context) {
 		}
 		c.JSON(http.StatusOK, gin.H{
 			"status":  "success",
-			"message": fmt.Sprint(result, " record deleted"),
+			"message": fmt.Sprint(result, " Product record deleted"),
 		})
-		glog.Info("Contact successfully deleted:", result)
+		glog.Info("Product successfully deleted:", result)
 		c.Abort()
 	}
 }
@@ -302,9 +299,9 @@ func (ch *ProductHandler) UpdateProduct() func(*gin.Context) {
 		}
 		c.JSON(http.StatusCreated, gin.H{
 			"status":  "success",
-			"message": ids,
+			"message": "Product record successfully updated",
 		})
-		glog.Info("Product successfully created:", ids)
+		glog.Info("Product record successfully updated:", ids)
 		c.Abort()
 	}
 }
