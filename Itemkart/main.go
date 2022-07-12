@@ -75,6 +75,15 @@ func main() {
 	r.POST("/product/:id", ProductHandler.UpdateProduct())
 	r.DELETE("/product/:id", ProductHandler.DeleteProduct())
 
+	//Product API
+	cdbo := &database.ContactDBO{Client: db}
+	OrderHandler := &h.OrderHandler{IOrder: cdbo}
+
+	r.GET("/order/:id", OrderHandler.GetOrderByID())
+	r.POST("/order", OrderHandler.CreateOrder())
+	r.POST("/order/:id", OrderHandler.UpdateOrder())
+	r.DELETE("/order/:id", OrderHandler.DeleteOrder())
+
 	r.Run(PORT)
 	fmt.Println("This is a ItemKart service.....")
 }

@@ -78,3 +78,42 @@ Rest Full Service List
     "status": "success"
     }
 
+------------------------------------------
+5. Get details of order
+    Request API URL  : http://localhost:50080/order/1
+    Request API Type : GET
+
+    Response : {
+    "id": 1,
+    "productid": 101,
+    "customerid": 1001
+}
+
+6. Create new order
+    Request API URL  : http://localhost:50080/order
+    Request API Type : POST
+    Request API Body : {"id":1,"custmerid":1001,"productid":101}
+
+    Response :{
+    "message": "Order successfully created",
+    "status": "success"
+}
+
+7. Update order record
+    Request API URL  : http://localhost:50080/order/1
+    Request API Type : POST
+    Request API Body : {"custmerid":1001,"productid":101}
+
+    Response : {
+    "message": "Order record successfully updated",
+    "status": "success"
+}
+
+8. Delete order record
+    Request API URL  : http://localhost:50080/order/1
+    Request API Type : DELETE
+
+    Response: {
+    "message": "1 Order record deleted",
+    "status": "success"
+}
