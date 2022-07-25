@@ -54,7 +54,7 @@ func (ch *OrderHandler) GetOrderByID() func(*gin.Context) {
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{
 				"status":  "fail",
-				"message": "error in fetching contact",
+				"message": "error in fetching order",
 			})
 			glog.Errorln(err)
 			c.Abort()
